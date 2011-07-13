@@ -1,4 +1,6 @@
 Kanbanfu::Application.routes.draw do
+  resources :projects, :defaults => { :format => :json }
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
