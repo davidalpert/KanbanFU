@@ -25,5 +25,6 @@ group :development, :test do
   gem 'faker'
   gem 'spork', '~> 0.9.0.rc'
   gem 'database_cleaner'
+  gem 'json_spec'
 end
 

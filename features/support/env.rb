@@ -6,6 +6,7 @@
 
 require 'rubygems'
 require 'spork'
+require 'json_spec/cucumber'
  
 Spork.prefork do
   require 'cucumber/rails'
