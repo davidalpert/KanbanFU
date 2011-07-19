@@ -7,10 +7,10 @@ describe ProjectsController do
   end
 
   describe 'GET on index via JSON' do
-    it 'renders the projects page' do
+    it 'returns the collection of projects' do
       Project.stub(:all).and_return(@projects)
       get :index, :format => :json
-      response.body.should eq(@projects.to_json)
+      response.body.should eq({projects: @projects}.to_json)
     end
   end
 

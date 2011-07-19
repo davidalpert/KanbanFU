@@ -3,7 +3,6 @@ Feature: Projects API
   I want to call /projects
   to get all the projects for account
 
-@wip
   Scenario: Listing projects
     Given I have the projects:
       | id | name              | description |

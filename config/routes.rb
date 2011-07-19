@@ -1,5 +1,9 @@
 Kanbanfu::Application.routes.draw do
-  resources :projects, :defaults => { :format => :json }
+  get "cards/index"
+
+  resources :projects, :defaults => { :format => :json } do
+    resources :cards
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
