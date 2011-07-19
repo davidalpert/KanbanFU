@@ -3,10 +3,14 @@ class CardsController < ApplicationController
   
   def index
     project = Project.find(params[:project_id])
-    if project
-      respond_with({cards: project.cards}, :status => :ok)
-    else
-      respond_with(@project.to_json, :status => 404)
+    respond_to do |format|
+      format.json do
+        if project
+          render :json => {cards: project.cards}, :except => [:project_id, :created_at, :updated_at]
+        else
+          render :json => @project.to_json, :status => 404
+        end
+      end
     end
   end
 
