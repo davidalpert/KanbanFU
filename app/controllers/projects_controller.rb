@@ -3,6 +3,6 @@ class ProjectsController < ApplicationController
 
   def index
     @projects = Project.all
-    respond_with(@projects)
+    respond_with({ projects: @projects })
   end
 end
