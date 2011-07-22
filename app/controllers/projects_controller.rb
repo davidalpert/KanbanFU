@@ -3,6 +3,6 @@ class ProjectsController < ApplicationController
 
   def index
     @projects = Project.all
-    respond_with({ projects: @projects })
+    render :json => { projects: @projects }, :except => [:project_id, :created_at, :updated_at]
   end
 end

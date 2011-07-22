@@ -6,7 +6,6 @@ describe CardsController do
     @project = stub_model(Project, id: 1, name: "Blazing Saddles", description: "Movie")
     @cards = (1..1).collect {|i| stub_model(Card, :project_id => @project.id, :id => i, :title => "card_#{i}", :description => "description_#{i}") }
     @project.stub(:cards).and_return(@cards)
-    @json = {cards: @cards}.to_json(:except => [:project_id, :created_at, :updated_at])
   end
 
   describe ".index with JSON format" do
@@ -14,8 +13,10 @@ describe CardsController do
       before do
         Project.stub(:find).with(@project.id).and_return(@project)
         get :index, :format => :json, :project_id => @project.id
+        @json = {cards: @cards}.to_json(:except => [:project_id, :created_at, :updated_at])
       end
       
+      it { should respond_with :success }
       it { response.body.should eq(@json) }
     end
 
@@ -31,24 +32,28 @@ describe CardsController do
 
   describe ".show with JSON format" do
     before do
-      card = @project.cards.first
-      Project.stub(:find).with(@project.id).and_return(@project)
-      Card.stub(:find).with(card.id).and_return(card)
-      get :index, :format => :json, :project_id => @project.id, :id => card.id
+      @card = @project.cards.first
     end
     
-    context "when the resource exists" do
+    context "when resource exists" do
+      before do 
+        Card.stub(:find).with(@card.id).and_return(@card) 
+        get :show, :format => :json, :project_id => @project.id, :id => @card.id
+        @json = {card: @card}.to_json(:except => [:project_id, :created_at, :updated_at])
+      end
+      
       it { should respond_with :success }
+      it { response.body.should eq(@json) }
     end
     
-    context "when the resource does not exists"  do
-      it { should respond_with :missing }
-    end
-    
-    context "when the project does not exist" do 
-      it { should respond_with :missing }
-    end
+    context "when resource don't exist"  do
+      before do 
+        Card.stub(:find).with(@card.id).and_return(nil) 
+        get :show, :format => :json, :project_id => @project.id, :id => @card.id
+      end
 
+      it { should respond_with :missing }
+    end    
   end
 
 end
