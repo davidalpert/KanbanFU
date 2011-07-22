@@ -3,7 +3,7 @@ require 'spec_helper'
 describe ProjectsController do
 
   before(:each) do
-    @projects = (1..1).collect {|i| stub_model(Project, :id => i, :name => "project_#{i}", :description => "description_#{i}") }
+    @projects = (1..10).collect {|i| stub_model(Project, :id => i, :name => "project_#{i}", :description => "description_#{i}") }
     @json = {projects: @projects}.to_json(:except => [:project_id, :created_at, :updated_at])
   end
 
