@@ -25,6 +25,5 @@ Feature: Cards API
       | 3  | Take the town    | Make everybody sell their houses  |
     When I call API "/projects/1/cards/2"
     Then the response should be a "card" with:
-      | id          | 2                              | 
-      | title       | Kill the Sheriff               |
-      | description | Make the town kill the Sheriff | 
+      | id | title            | description                       |
+      | 2  | Kill the Sheriff | Make the town kill the Sheriff    |
