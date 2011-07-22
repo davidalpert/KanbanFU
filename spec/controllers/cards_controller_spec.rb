@@ -8,19 +8,52 @@ describe CardsController do
     @project.stub(:cards).and_return(@cards)
   end
 
-  describe "GET on 'index' via JSON" do
-    it "returns the collection of cards" do
-      Project.stub(:find).with(@project.id).and_return(@project)
-      get :index, :format => :json, :project_id => @project.id
-      json = {cards: @cards}.to_json(:except => [:project_id, :created_at, :updated_at])
-      response.body.should eq(json)
+  describe ".index with JSON format" do
+    context "resource found" do
+      before do
+        Project.stub(:find).with(@project.id).and_return(@project)
+        get :index, :format => :json, :project_id => @project.id
+        @json = {cards: @cards}.to_json(:except => [:project_id, :created_at, :updated_at])
+      end
+      
+      it { should respond_with :success }
+      it { response.body.should eq(@json) }
     end
 
-    it "returns an error when the project does not exist" do
-      Project.stub(:find).with(@project.id).and_return(nil)
-      get :index, :format => :json, :project_id => @project.id
-      should respond_with 404
+    context "resource not found" do
+      before do
+        Project.stub(:find).with(@project.id).and_return(nil)
+        get :index, :format => :json, :project_id => @project.id
+      end
+      
+      it { should respond_with :missing }
     end
+  end
+
+  describe ".show with JSON format" do
+    before do
+      @card = @project.cards.first
+    end
+    
+    context "when resource exists" do
+      before do 
+        Card.stub(:find).with(@card.id).and_return(@card) 
+        get :show, :format => :json, :project_id => @project.id, :id => @card.id
+        @json = {card: @card}.to_json(:except => [:project_id, :created_at, :updated_at])
+      end
+      
+      it { should respond_with :success }
+      it { response.body.should eq(@json) }
+    end
+    
+    context "when resource don't exist"  do
+      before do 
+        Card.stub(:find).with(@card.id).and_return(nil) 
+        get :show, :format => :json, :project_id => @project.id, :id => @card.id
+      end
+
+      it { should respond_with :missing }
+    end    
   end
 
 end
