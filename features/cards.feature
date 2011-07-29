@@ -16,7 +16,6 @@ Feature: Cards API
       | 2  | Kill the Sheriff | Make the town kill the Sheriff    | 
       | 3  | Take the town    | Make everybody sell their houses  | 
 
-  @wip
   Scenario: Get detail of a card
     Given I have the cards for project "1":
       | id | title            | description                       |
