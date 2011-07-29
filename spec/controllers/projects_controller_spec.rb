@@ -18,4 +18,23 @@ describe ProjectsController do
     it { response.body.should eq(@json) }
   end
 
+  describe '.create' do
+    before do
+      project = @projects.first.attributes
+      project.delete('created_at')
+      project.delete('updated_at')
+      @json = {project: project}.to_json
+      project.delete('id')
+      @new_project = stub_model(Project, project)
+      Project.stub(:new).with(project).and_return(@new_project)
+      @new_project.should_receive(:save).and_return(true) 
+      post :create, :format => :json, :project => project
+    end
+    
+    it { should respond_with(:success) }
+    it { should respond_with_content_type(:json) }
+    it { response.body.should be_json_eql(@json) }
+  end
+
 end
+
