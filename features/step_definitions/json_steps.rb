@@ -11,9 +11,7 @@ Then /^the response should be a "([^"]+)" with:$/ do |root, table|
   Then(%Q{the JSON at "#{root}" should be #{row.to_json}})
 end
 
-Given /^I post to "([^"]*)" with:$/ do |resources, table|
-  klass = resources.classify.downcase
-  table.hashes.each do |attributes|
-    post resources, :format => :json, :project => attributes  
-  end
+Given /^I post to "\/projects" with:$/ do |table|
+  post_resource('/projects', 'project', table.hashes)
 end
+
