@@ -16,7 +16,6 @@ Feature: Projects API
       | 2  | Spaceballs        | Planet Spaceball's President Skroob sends Lord Dark Helmet to steal Planet Druidia's abundant supply of air to replenish their own, and only Lone Starr can stop them.|
       | 3  | Young Frankenstein| Dr. Frankenstein's grandson, after years of living down the family reputation, inherits granddad's castle and repeats the experiments.|
 
-@wip
   Scenario: Creating a project
     Given I post to "/projects" with:
       | name              | description |
