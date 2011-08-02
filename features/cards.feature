@@ -26,3 +26,12 @@ Feature: Cards API
     Then the response should be a "card" with:
       | id | title            | description                       |
       | 2  | Kill the Sheriff | Make the town kill the Sheriff    |
+
+  Scenario: Creating a card
+    Given I post to "/cards" for project "1" with:
+      | title            | description                            |
+      | Kill the Sheriff | Make the town kill the Sheriff         |
+    When I call API "/projects/1/cards"
+    Then the response should be a collection of "cards" with:
+      | id | title            | description                       |
+      | 1  | Kill the Sheriff | Make the town kill the Sheriff    |
