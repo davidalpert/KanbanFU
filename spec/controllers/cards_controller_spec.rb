@@ -86,4 +86,36 @@ describe CardsController do
       it { response.body.should be_json_eql(nil) }
     end
   end
+
+  describe '.update' do
+    before do
+      Project.stub(:find).with(@project.id).and_return(@project)
+      @card = @cards.first
+      @project.stub_chain(:cards, :find).with(@card.id).and_return(@card)
+    end
+
+    context "card is updated successfully" do
+      before do
+        updated_card = stub_model(Card, :id => 1, :project_id => 1, :title => 'updated title', :description => 'new description')
+        @json = {card: updated_card}.to_json
+        put :update, :format => :json, :project_id => @project.id, :id => 1, :card => {:title => 'updated title', :description => 'new description'}
+      end
+
+      it { should respond_with(:success) }
+      it { should respond_with_content_type(:json) }
+      it { response.body.should be_json_eql(@json) }
+    end
+
+    context "card is not updated" do
+      before do
+        @card.should_receive(:update_attributes).and_return(false)
+        put :update, :format => :json, :project_id => @project.id, :id => 1, :card => {:title => ''}
+      end
+
+      it { should respond_with(:bad_request) }
+      it { should respond_with_content_type(:json) }
+      it { response.body.should be_json_eql(nil) }
+    end
+  end
+
 end
