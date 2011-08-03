@@ -4,7 +4,7 @@ describe CardsController do
 
   before(:each) do
     @project = stub_model(Project, id: 1, name: "Blazing Saddles", description: "Movie")
-    @cards = (1..1).collect {|i| stub_model(Card, :project_id => @project.id, :id => i, :title => "card_#{i}", :description => "description_#{i}") }
+    @cards = (1..10).collect {|i| stub_model(Card, :project_id => @project.id, :id => i, :title => "card_#{i}", :description => "description_#{i}") }
     @project.stub(:cards).and_return(@cards)
   end
 
@@ -53,7 +53,37 @@ describe CardsController do
       end
 
       it { should respond_with :missing }
-    end    
+    end
   end
 
+  describe '.create' do
+    before do
+      Project.stub(:find).with(@project.id).and_return(@project)
+    end
+
+    context "when the card is created successfully" do
+      before do
+        card_attributes = {:title => "card_1", :description => "description_1"}
+        card = stub_model(Card, card_attributes.merge({:project_id => @project.id}))
+        @json = {card: card}.to_json
+        @project.stub_chain(:cards, :create).and_return(card)
+        post :create, :format => :json, :project_id => @project.id, :card => card_attributes
+      end
+
+      it { should respond_with(:success) }
+      it { should respond_with_content_type(:json) }
+      it { response.body.should be_json_eql(@json) }
+    end
+
+    context "when the card is invalid" do
+      before do
+        @project.stub_chain(:cards, :create).and_return(false)
+        post :create, :format => :json, :project_id => @project.id, :card => {}
+      end
+
+      it { should respond_with(:bad_request) }
+      it { should respond_with_content_type(:json) }
+      it { response.body.should be_json_eql(nil) }
+    end
+  end
 end
