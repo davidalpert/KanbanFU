@@ -9,3 +9,7 @@ def put_resource(put_path, resource, hashes)
     put put_path, :format => :json, resource => attributes  
   end
 end
+
+def delete_resource(delete_path)
+  delete delete_path, :format => :json
+end

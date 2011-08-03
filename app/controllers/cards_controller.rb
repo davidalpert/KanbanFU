@@ -26,4 +26,11 @@ class CardsController < ApplicationController
     item = {card: card} if card.update_attributes(params[:card])
     render_json(item, :error_code => :bad_request)
   end
+
+  def destroy
+    project = Project.find(params[:project_id])
+    card = project.cards.find(params[:id])
+    item = {} if card.destroy
+    render_json(item, :error_code => :bad_request)
+  end
 end

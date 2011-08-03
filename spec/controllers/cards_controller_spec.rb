@@ -118,4 +118,37 @@ describe CardsController do
     end
   end
 
+  describe '.delete' do
+    before do
+      Project.stub(:find).with(@project.id).and_return(@project)
+      @card = @cards.first
+      @project.stub_chain(:cards, :find).with(@card.id).and_return(@card)
+    end
+
+    context "card is deleted successfully" do
+      before do
+        @card.should_receive(:destroy).and_return(true)
+        delete :destroy, :format => :json, :project_id => @project.id, :id => 1
+      end
+
+      it { should respond_with(:success) }
+      it { should respond_with_content_type(:json) }
+      it { response.body.should be_json_eql({}) }
+    end
+
+    context "card is not deleted" do
+      before do
+        @card.should_receive(:destroy).and_return(false)
+        delete :destroy, :format => :json, :project_id => @project.id, :id => 1
+      end
+
+      it { should respond_with(:bad_request) }
+      it { should respond_with_content_type(:json) }
+      it { response.body.should be_json_eql(nil) }
+    end
+  end
+
+  describe 'when the project cannot be found' do
+    pending
+  end
 end

@@ -14,3 +14,8 @@ When /^I put to "\/cards" for project "([^"]*)" and card "([^"]*)" with:$/ do |p
   project = Project.create!(id: project_id, name: "Blazing Saddles", description: "Good movie")
   put_resource "/projects/#{project_id}/cards/#{card_id}", 'card', table.hashes
 end
+
+When /^I delete card "([^"]*)" for project "([^"]*)"$/ do |card_id, project_id|
+  project = Project.create!(id: project_id, name: "Blazing Saddles", description: "Good movie")
+  delete_resource "/projects/#{project_id}/cards/#{card_id}"
+end
