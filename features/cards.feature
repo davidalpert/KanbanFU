@@ -29,9 +29,38 @@ Feature: Cards API
 
   Scenario: Creating a card
     Given I post to "/cards" for project "1" with:
-      | title            | description                            |
-      | Kill the Sheriff | Make the town kill the Sheriff         |
+      | title                 | description                       |
+      | Kill the Sheriff      | Make the town kill the Sheriff    |
     When I call API "/projects/1/cards"
     Then the response should be a collection of "cards" with:
       | id | title            | description                       |
       | 1  | Kill the Sheriff | Make the town kill the Sheriff    |
+
+  Scenario: Updating a card
+    Given I have the cards for project "1":
+      | id | title            | description                       |
+      | 1  | Find a Sheriff   | Get a Sheriff everybody will hate |
+      | 2  | Kill the Sheriff | Make the town kill the Sheriff    |
+      | 3  | Take the town    | Make everybody sell their houses  |
+    When I put to "/cards" for project "1" and card "1" with:
+      | title                 | description                       |
+      | Find a Deputy         | Get a Deputy for the Sheriff      |
+    And I call API "/projects/1/cards"
+    Then the response should be a collection of "cards" with:
+      | id | title            | description                       |
+      | 1  | Find a Deputy    | Get a Deputy for the Sheriff      |
+      | 2  | Kill the Sheriff | Make the town kill the Sheriff    |
+      | 3  | Take the town    | Make everybody sell their houses  |
+
+  Scenario: Deleting a card
+    Given I have the cards for project "1":
+      | id | title            | description                       |
+      | 1  | Find a Sheriff   | Get a Sheriff everybody will hate |
+      | 2  | Kill the Sheriff | Make the town kill the Sheriff    |
+      | 3  | Take the town    | Make everybody sell their houses  |
+    When I delete card "3" for project "1"
+    And I call API "/projects/1/cards"
+    Then the response should be a collection of "cards" with:
+      | id | title            | description                       |
+      | 1  | Find a Sheriff   | Get a Sheriff everybody will hate |
+      | 2  | Kill the Sheriff | Make the town kill the Sheriff    |

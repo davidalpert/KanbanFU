@@ -10,3 +10,7 @@ Then /^the response should be a "([^"]+)" with:$/ do |root, table|
   row = table.hashes.first
   Then(%Q{the JSON at "#{root}" should be #{row.to_json}})
 end
+
+Then /^the response should be "([^"]*)"$/ do |status|
+  page.driver.status_code.should == status.to_i
+end
