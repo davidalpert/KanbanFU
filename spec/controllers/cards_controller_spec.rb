@@ -8,8 +8,10 @@ describe CardsController do
     @project.stub(:cards).and_return(@cards)
   end
 
-  describe ".index with JSON format" do
-    context "resource found" do
+  it_behaves_like "any nested resource", Project, :project_id
+
+  describe "#index with JSON format" do
+    context "project found" do
       before do
         Project.stub(:find_by_id).with(@project.id).and_return(@project)
         get :index, :format => :json, :project_id => @project.id
@@ -19,23 +21,14 @@ describe CardsController do
       it { should respond_with :success }
       it { response.body.should eq(@json) }
     end
-
-    context "resource not found" do
-      before do
-        Project.stub(:find_by_id).with(@project.id).and_return(nil)
-        get :index, :format => :json, :project_id => @project.id
-      end
-      
-      it { should respond_with :missing }
-    end
   end
 
-  describe ".show with JSON format" do
+  describe "#show with JSON format" do
     before do
       @card = @project.cards.first
     end
     
-    context "when resource exists" do
+    context "when card exists" do
       before do 
         Card.stub(:find_by_id).with(@card.id).and_return(@card) 
         get :show, :format => :json, :project_id => @project.id, :id => @card.id
@@ -46,7 +39,7 @@ describe CardsController do
       it { response.body.should eq(@json) }
     end
     
-    context "when resource don't exist"  do
+    context "when card doesn't exist"  do
       before do 
         Card.stub(:find_by_id).with(@card.id).and_return(nil) 
         get :show, :format => :json, :project_id => @project.id, :id => @card.id
@@ -56,7 +49,7 @@ describe CardsController do
     end
   end
 
-  describe '.create' do
+  describe '#create' do
     before do
       Project.stub(:find_by_id).with(@project.id).and_return(@project)
     end
@@ -87,7 +80,7 @@ describe CardsController do
     end
   end
 
-  describe '.update' do
+  describe '#update' do
     before do
       Project.stub(:find_by_id).with(@project.id).and_return(@project)
       @card = @cards.first
@@ -118,7 +111,7 @@ describe CardsController do
     end
   end
 
-  describe '.delete' do
+  describe '#delete' do
     before do
       Project.stub(:find_by_id).with(@project.id).and_return(@project)
       @card = @cards.first
@@ -146,9 +139,5 @@ describe CardsController do
       it { should respond_with_content_type(:json) }
       it { response.body.should be_json_eql(nil) }
     end
-  end
-
-  describe 'when the project cannot be found' do
-    pending
   end
 end

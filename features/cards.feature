@@ -3,10 +3,6 @@ Feature: Cards API
   I want to use the API to manage cards
   to administrate cards operations
 
-  Scenario: Listing cards for a project that does not exist
-    When I call API "/projects/1393/cards"
-    Then the response should be "404"
-
   Scenario: Listing cards for a project
     Given I have the cards for project "1":
       | id | title            | description                       |
