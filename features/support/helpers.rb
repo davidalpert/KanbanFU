@@ -28,7 +28,7 @@ def adjust_expected_response(row)
   f = row.delete('finished_on')
 
   row.
-    merge({'finished_on' => f.nil? || f == "" ? nil : DateTime.parse(f).strftime('%Y-%m-%dT00:00:00Z') }).
+    merge(f.nil? ? {} : {'finished_on' => f == "" ? nil : DateTime.parse(f).strftime('%Y-%m-%dT00:00:00Z') }).
     merge(if_exists(row, 'started_on') { |s| DateTime.parse(s).strftime('%Y-%m-%dT00:00:00Z') }).
     merge(if_exists(row, 'size') { |s| s.to_i }).
     merge(if_exists(row, 'waiting_time') { |s| s.to_f }).

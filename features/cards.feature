@@ -47,11 +47,10 @@ Feature: Cards API
           | 2  | Kill the Sheriff | Make the town kill the Sheriff    | Nov 06, 2011 |              | 1    | working  | 0 | 0 |
           | 3  | Take the town    | Make everybody sell their houses  | Nov 10, 2011 |              | 3    | analysis | 0 | 0 |
 
-      @wip
   Scenario: Deleting a card
     When I delete card "3" for project "1"
-    And I call API "/projects/1/cards"
+    And  I call API "/projects/1/cards"
     Then the response should be a collection of "cards" with:
-      | id | title            | description                       |
-      | 1  | Find a Sheriff   | Get a Sheriff everybody will hate |
-      | 2  | Kill the Sheriff | Make the town kill the Sheriff    |
+          | id | title            | description                       | started_on   | finished_on  | size | phase    | blocked_time | waiting_time | 
+          | 1  | Find a Sheriff   | Get a Sheriff everybody will hate | Nov 01, 2011 | Nov 5, 2011  | 2    | archive  | 0 | 0 |
+          | 2  | Kill the Sheriff | Make the town kill the Sheriff    | Nov 06, 2011 |              | 1    | working  | 0 | 0 |
