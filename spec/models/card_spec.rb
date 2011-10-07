@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Card do
   it { should validate_presence_of(:title) }
+  it { should validate_presence_of(:phase) }
   it { should belong_to(:phase) }
   
   it { should have_db_column(:started_on).of_type(:datetime)  }

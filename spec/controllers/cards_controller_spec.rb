@@ -2,19 +2,30 @@ require 'spec_helper'
 
 describe CardsController do
 
-  let(:exceptions) { [:project_id, :created_at, :updated_at, :phase_id] }
+  let(:exceptions) { ['project_id', 'created_at', 'updated_at', 'phase_id'] }
+  
+  let(:archive) { stub_model(Phase, name: 'archive') }
+  let(:backlog) { stub_model(Phase, name: 'backlog') }
   
   before(:each) do
     @project = stub_model(Project, id: 1, name: "Blazing Saddles", description: "Movie")
-    @cards = (1..10).collect {|i| stub_model(Card, :project_id => @project.id, :id => i, :title => "card_#{i}", :description => "description_#{i}") }
+    @cards = (1..10).collect { |i| stub_model(Card, 
+                                             :project_id => @project.id, 
+                                             :id => i, 
+                                             :title => "card_#{i}", 
+                                             :description => "description_#{i}",
+                                             :started_on => DateTime.now,
+                                             :finished_on => DateTime.now + i,
+                                             :size => i,
+                                             :phase => archive) }
     @project.stub(:cards).and_return(@cards)
   end
 
   it_behaves_like "any nested resource", Project, :project_id
 
-  describe "#index with JSON format" do
+  describe "#index" do
     context "project found" do
-      let(:json) { {cards: @cards}.to_json(:except => exceptions) }
+      let(:json) { {cards: adjust(@cards)}.to_json(except: exceptions) }
       
       before do
         Project.stub(:find_by_id).with(@project.id.to_s).and_return(@project)
@@ -26,10 +37,10 @@ describe CardsController do
     end
   end
 
-  describe "#show with JSON format" do
+  describe "#show" do
     let(:card) { @project.cards.first } 
 
-    let(:json) { {card: card}.to_json(:except => exceptions) }
+    let(:json) { { card: adjust(card) }.to_json(:except => exceptions) }
     
     context "when card exists" do
       before do
@@ -52,14 +63,18 @@ describe CardsController do
   end
 
   describe '#create' do
-    before do
-      Project.stub(:find_by_id).with(@project.id.to_s).and_return(@project)
-    end
+    before { Project.stub(:find_by_id).with(@project.id.to_s).and_return(@project) }
 
     context "when the card is created successfully" do
       let(:card_attributes) { {:title => "card_1", :description => "description_1"} }
-      let(:card) { stub_model(Card, card_attributes.merge({:project_id => @project.id})) }
-      let(:json) { {card: card}.to_json }
+
+      let(:card) { stub_model(Card, 
+                              project_id: @project.id,
+                              title: 'card_1',
+                              description: 'description_1',
+                              phase: backlog) }
+                              
+      let(:json) { { card: adjust(card) }.to_json(except: exceptions) }
       
       before do
         @project.stub_chain(:cards, :create).and_return(card)
@@ -93,7 +108,7 @@ describe CardsController do
     context "card is updated successfully" do
       let(:updated_card) { stub_model(Card, :id => 1, :project_id => 1, :title => 'updated title', :description => 'new description') }
       
-      let(:json) { {card: updated_card}.to_json }
+      let(:json) { {card: updated_card}.to_json(except: exceptions) }
       
       before { put :update, 
                    :format => :json, 
@@ -146,5 +161,12 @@ describe CardsController do
       it { should respond_with_content_type(:json) }
       it { response.body.should be_json_eql(nil) }
     end
+  end
+  
+  def adjust(cards) 
+    multiple = cards.kind_of? Array
+    cards = [cards].flatten.collect { |c| c.attributes.merge(phase: c.phase.name) }
+    return cards if multiple
+    cards.first
   end
 end

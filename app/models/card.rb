@@ -1,6 +1,7 @@
 class Card < ActiveRecord::Base
   belongs_to :phase
   validates :title, :presence => true
+  validates :phase, :presence => true
   after_initialize :init  
   
   private
