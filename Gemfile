@@ -11,6 +11,8 @@ group :assets do
   gem 'uglifier'
 end
 
+gem 'jquery-rails'
+
 # Deploy with Capistrano
 gem 'capistrano'
 
