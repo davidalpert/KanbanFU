@@ -4,11 +4,11 @@ class ProjectsController < ApplicationController
   def index
     render_json({projects: Project.all})
   end
-  
+
   def show
-    render_json({project: Project.find(params[:id])})
+    render_json({project: Project.find_by_id(params[:id])})
   end
-      
+
   def create
     project = Project.new(params[:project])
     project.save
