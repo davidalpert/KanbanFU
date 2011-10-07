@@ -1,11 +1,12 @@
 Given /^I have the cards for project "([^"]*)":$/ do |project_id, table|
   project = Project.create!(id: project_id, name: "Blazing Saddles", description: "Good movie")
-  table.hashes.each do |attr| 
-    add = {phase: Phase.find_or_create_by_name(attr.delete(:phase))}.
-          merge(if_exists(attr, 'size') { |s| s.to_i }).
-          merge(parse_if_exists(attr, 'finished_on', DateTime)).
-          merge(parse_if_exists(attr, 'started_on', DateTime))
-    project.cards.create!(attr.merge(add))
+  table.hashes.each do |row| 
+    phase = Phase.find_or_create_by_name(row.delete('phase'))
+    add = if_exists(row, 'size') { |s| s.to_i }.
+          merge(parse_if_exists(row, 'finished_on', DateTime)).
+          merge(parse_if_exists(row, 'started_on', DateTime)).
+          merge('phase' => phase)
+    card = project.cards.create!(row.merge(add))
   end
 end
 
