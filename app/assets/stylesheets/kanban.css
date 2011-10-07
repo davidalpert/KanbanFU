@@ -1,0 +1,227 @@
+body, p, h1, h2, h3, h4, h5, h6, ul, li, form{ 
+  margin:0; 
+  padding:0; 
+  line-height:18px; 
+} 
+p, h2, h3, h4, h5, h6{ 
+  margin-bottom:18px; 
+} 
+
+table{
+  width: 100%;
+  text-align: left;
+  background: #c0c0c0;
+}
+
+table thead  {
+  cursor: pointer;
+}
+
+table thead tr,
+table tfoot tr {
+  background: #c0c0c0;
+}
+
+table tbody tr {
+  background: #f0f0f0;
+}
+
+td, th {
+  border: 1px solid white;
+}
+
+table.sortable th {
+  text-decoration: underline;
+}
+table.sortable th.sorttable_nosort {
+  text-decoration: none;
+  cursor: auto;
+}
+
+#doc3 {margin:auto;}
+
+#hd {
+  background: #2D3337;
+  height: 38px;
+}
+
+#user_navigation {
+  float: right;
+  margin: 10px 10px 0px 0px;
+  color: #FFFAD5;
+}
+
+#user_navigation a {
+  color: #FFFAD5;
+  text-decoration: none;
+}
+
+#user_navigation a:hover {
+  text-decoration: underline;
+}
+
+#project_navigation {
+  color: #FFFAD5;
+}
+
+#project_selector {
+  margin-right: 3em;
+}
+
+#content{
+  clear: both;
+  float: both;
+  width: 100%;
+}
+
+#kanban{
+  clear: both;
+  float: both;
+  width: 100%;
+}
+#kanban th,td {
+  border: none;
+  padding: 0.3em;
+}
+
+#kanban .phase_title{
+  font-size: 1.4em;
+  text-align: center;
+}
+
+#kanban .phase{
+  vertical-align: top;  
+  border-left: 2px dotted #CCCCCC;
+}
+
+#kanban .card_list{
+  list-style: none;
+  min-height: 800px;
+  margin: 2px;
+  padding: 2px;
+}
+
+#kanban .card{
+  cursor: move;
+  float: left;
+  list-style-image:none;
+  list-style-position:outside;
+  list-style-type:none;
+  border: 2px solid #999;
+  font-size: .9em;
+  width: 98%;
+  margin:0 0 2px -1px;
+  padding-right: 6px;
+  -moz-border-radius-bottomleft:4px;
+  -moz-border-radius-bottomright:4px;
+  -moz-border-radius-topleft:4px;
+  -moz-border-radius-topright:4px;
+}
+
+#kanban .card_header{
+  padding: 3px;
+  float: left; 
+  background-color: #DDDDDD; 
+  width: 100%;
+}
+#kanban .card_header a{
+  font-weight: bold;
+  text-decoration: none;
+  color: #000000;
+}
+#kanban .card_header img{
+  border: none;
+}
+
+#kanban .card_content{
+  padding: 3px;
+  float: left; 
+  background-color: #EEEEEE; 
+  width: 100%;
+  padding-bottom: 2px;
+}
+
+#phase_list li {
+  float: left;
+  list-style-type: none;
+  border: 2px solid;
+  padding: 1em;
+  margin-right: 1em;
+}
+
+.container_950{
+  margin: 3em auto 0 auto;
+  text-align:left;
+  width: 73.076em;/* non-IE */
+  *width:71.25em;/* IE */
+	min-width:950px;
+}
+
+.active {
+  font-weight: bolder;
+}
+
+.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 50px !important; }
+.ui-sortable-placeholder * { visibility: hidden; }
+
+/* project dropdown */
+ul.project_nav {
+  list-style: none;
+  padding: 0 10px;
+  margin: 0;
+  float: left;
+  background: #2D3337;
+  font-size: 1.2em;
+}
+ul.project_nav li {
+  list-style: none;
+  float: left;
+  margin: 0;
+  padding: 0 15px 0 0;
+  position: relative; /*--Declare X and Y axis base for sub navigation--*/
+}
+ul.project_nav li a{
+  padding: 10px 5px;
+  color: #FFFAD5;
+  display: block;
+  text-decoration: none;
+  float: left;
+}
+ul.project_nav li a:hover{
+  color: white;
+  background-color: #555;
+}
+ul.project_nav li span { /*--Drop down trigger styles--*/
+  width: 13px;
+  height: 35px;
+  float: left;
+  background: url(/images/subnav_btn.gif) no-repeat center top;
+}
+ul.project_nav li span.subhover {background-position: center bottom; cursor: pointer;} /*--Hover effect for trigger--*/
+ul.project_nav li ul.subnav {
+  list-style: none;
+  position: absolute; /*--Important - Keeps subnav from affecting main navigation flow--*/
+  left: 0; top: 35px;
+  background: #333;
+  margin: 0; padding: 0;
+  display: none;
+  float: left;
+  width: 170px;
+  border: 1px solid #111;
+}
+ul.project_nav li ul.subnav li{
+  margin: 0; padding: 0;
+  border-top: 1px solid #252525; /*--Create bevel effect--*/
+  border-bottom: 1px solid #444; /*--Create bevel effect--*/
+  clear: both;
+  width: 170px;
+}
+html ul.project_nav li ul.subnav li a {
+  float: left;
+  width: 145px;
+  background: #333 url(/images/dropdown_linkbg.gif) no-repeat 10px center;
+  padding-left: 20px;
+}
+html ul.project_nav li ul.subnav li a:hover { /*--Hover effect for subnav links--*/
+  background: #2D3337 url(/images/dropdown_linkbg.gif) no-repeat 10px center;
+}

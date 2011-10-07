@@ -1,7 +1,7 @@
 Kanbanfu::Application.routes.draw do
   get "cards/index"
 
-  resources :projects, :defaults => { :format => :json } do
+  resources :projects do
     resources :cards
   end
 

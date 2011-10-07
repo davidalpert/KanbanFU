@@ -1,0 +1,11 @@
+<% content_for :javascript do %>
+  <%= javascript_include_tag 'project.js' %>
+<% end %>
+
+<table id="kanban">
+  <tbody>
+    <tr>
+      <%= render :partial => 'phase', :collection => Phase.all %>
+    </tr> 
+  </tbody>
+</table>

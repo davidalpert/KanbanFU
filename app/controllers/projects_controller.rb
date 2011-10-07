@@ -1,12 +1,15 @@
 class ProjectsController < ApplicationController
-  respond_to :json
+  respond_to :html, :json
 
   def index
     render_json({projects: Project.all})
   end
 
   def show
-    render_json({project: Project.find_by_id(params[:id])})
+    @project = Project.find_by_id(params[:id])
+    respond_with(@project) do |format|
+      format.json { render_json({project: @project}) }
+    end
   end
 
   def create

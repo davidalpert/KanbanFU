@@ -1,0 +1,4 @@
+<%= content_tag_for(:li, card) do -%>
+  <div class="card_header"><%= link_to card.id, [@project, card] %></div>
+  <div class="card_content"><%= card.title %></div>
+<% end -%>
