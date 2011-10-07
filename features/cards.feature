@@ -3,18 +3,21 @@ Feature: Cards API
   I want to use the API to manage cards
   to administrate cards operations
 
-  Scenario: Listing cards for a project
+  Background:
     Given I have the cards for project "1":
-      | id | title            | description                       |
-      | 1  | Find a Sheriff   | Get a Sheriff everybody will hate |
-      | 2  | Kill the Sheriff | Make the town kill the Sheriff    |
-      | 3  | Take the town    | Make everybody sell their houses  |
+      | id | title            | description                       | started_on   | finished_on  | size | phase    |
+      | 1  | Find a Sheriff   | Get a Sheriff everybody will hate | Nov 01, 2011 | Nov 5, 2011  | 2    | archive  |
+      | 2  | Kill the Sheriff | Make the town kill the Sheriff    | Nov 06, 2011 |              | 1    | working  |
+      | 3  | Take the town    | Make everybody sell their houses  | Nov 10, 2011 |              | 3    | analysis |
+  
+  @wip
+  Scenario: Listing cards for a project
     When I call API "/projects/1/cards"
     Then the response should be a collection of "cards" with:
-      | id | title            | description                       | 
-      | 1  | Find a Sheriff   | Get a Sheriff everybody will hate | 
-      | 2  | Kill the Sheriff | Make the town kill the Sheriff    | 
-      | 3  | Take the town    | Make everybody sell their houses  | 
+      | id | title            | description                       | started_on   | finished_on  | size | phase    | blocked_time | waiting_time | 
+      | 1  | Find a Sheriff   | Get a Sheriff everybody will hate | Nov 01, 2011 | Nov 5, 2011  | 2    | archive  | 0 | 0 |
+      | 2  | Kill the Sheriff | Make the town kill the Sheriff    | Nov 06, 2011 |              | 1    | working  | 0 | 0 |
+      | 3  | Take the town    | Make everybody sell their houses  | Nov 10, 2011 |              | 3    | analysis | 0 | 0 |
 
   Scenario: Get detail of a card
     Given I have the cards for project "1":

@@ -4,13 +4,13 @@ class CardsController < ApplicationController
 
   def index
     item = {cards: @project.cards} if @project
-    render_json(item, :except => [:project_id])
+    render_json(item, :except => exceptions)
   end
   
   def show
     card = Card.find_by_id(params[:id])
     item = {card: card} if card
-    render_json(item, :except => [:project_id])
+    render_json(item, :except => exceptions)
   end
 
   def create
@@ -38,7 +38,11 @@ class CardsController < ApplicationController
   end
 
   private
-  def get_project
-    @project = Project.find_by_id(params[:project_id])
-  end
+    def get_project
+      @project = Project.find_by_id(params[:project_id])
+    end
+  
+    def exceptions
+      [:project_id, :phase_id]
+    end
 end
