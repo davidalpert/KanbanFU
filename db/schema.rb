@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111007001127) do
+ActiveRecord::Schema.define(:version => 20111007013932) do
 
   create_table "cards", :force => true do |t|
     t.string   "title"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(:version => 20111007001127) do
     t.integer  "size"
     t.float    "blocked_time"
     t.float    "waiting_time"
+    t.integer  "phase_id"
   end
 
   create_table "phases", :force => true do |t|

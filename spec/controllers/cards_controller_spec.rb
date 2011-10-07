@@ -13,11 +13,11 @@ describe CardsController do
   describe "#index with JSON format" do
     context "project found" do
       before do
-        Project.stub(:find_by_id).with(@project.id).and_return(@project)
+        Project.stub(:find_by_id).with(@project.id.to_s).and_return(@project)
         get :index, :format => :json, :project_id => @project.id
         @json = {cards: @cards}.to_json(:except => [:project_id, :created_at, :updated_at])
       end
-      
+
       it { should respond_with :success }
       it { response.body.should eq(@json) }
     end
@@ -27,21 +27,21 @@ describe CardsController do
     before do
       @card = @project.cards.first
     end
-    
+
     context "when card exists" do
-      before do 
-        Card.stub(:find_by_id).with(@card.id).and_return(@card) 
+      before do
+        Card.stub(:find_by_id).with(@card.id.to_s).and_return(@card)
         get :show, :format => :json, :project_id => @project.id, :id => @card.id
         @json = {card: @card}.to_json(:except => [:project_id, :created_at, :updated_at])
       end
-      
+
       it { should respond_with :success }
       it { response.body.should eq(@json) }
     end
-    
+
     context "when card doesn't exist"  do
-      before do 
-        Card.stub(:find_by_id).with(@card.id).and_return(nil) 
+      before do
+        Card.stub(:find_by_id).with(@card.id.to_s).and_return(nil)
         get :show, :format => :json, :project_id => @project.id, :id => @card.id
       end
 
@@ -51,7 +51,7 @@ describe CardsController do
 
   describe '#create' do
     before do
-      Project.stub(:find_by_id).with(@project.id).and_return(@project)
+      Project.stub(:find_by_id).with(@project.id.to_s).and_return(@project)
     end
 
     context "when the card is created successfully" do
@@ -82,9 +82,9 @@ describe CardsController do
 
   describe '#update' do
     before do
-      Project.stub(:find_by_id).with(@project.id).and_return(@project)
+      Project.stub(:find_by_id).with(@project.id.to_s).and_return(@project)
       @card = @cards.first
-      @project.stub_chain(:cards, :find_by_id).with(@card.id).and_return(@card)
+      @project.stub_chain(:cards, :find_by_id).with(@card.id.to_s).and_return(@card)
     end
 
     context "card is updated successfully" do
@@ -113,9 +113,9 @@ describe CardsController do
 
   describe '#delete' do
     before do
-      Project.stub(:find_by_id).with(@project.id).and_return(@project)
+      Project.stub(:find_by_id).with(@project.id.to_s).and_return(@project)
       @card = @cards.first
-      @project.stub_chain(:cards, :find_by_id).with(@card.id).and_return(@card)
+      @project.stub_chain(:cards, :find_by_id).with(@card.id.to_s).and_return(@card)
     end
 
     context "card is deleted successfully" do

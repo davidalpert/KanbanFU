@@ -1,4 +1,4 @@
 class Card < ActiveRecord::Base
-  has_one :phase
+  belongs_to :phase
   validates :title, :presence => true
 end

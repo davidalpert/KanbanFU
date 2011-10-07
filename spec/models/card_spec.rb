@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Card do
   it { should validate_presence_of(:title) }
-  it { should have_one(:phase) }
+  it { should belong_to(:phase) }
   
   it { should have_db_column(:started_on).of_type(:datetime)  }
   it { should have_db_column(:finished_on).of_type(:datetime) }
