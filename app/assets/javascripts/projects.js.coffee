@@ -5,7 +5,7 @@ $(document).ready ->
       card_id = ui.item.attr('id').match(/\d{1,}$/)
       phase_id = ui.item.parent().parent().attr('id').match(/\d{1,}$/)
       $.ajax(
-        type: 'post'
+        type: 'put'
         data: $(ui.item.parent()).sortable('serialize') + '&card_id=' + card_id + '&phase_id=' + phase_id
         dataType: 'script'
         complete: (request) ->

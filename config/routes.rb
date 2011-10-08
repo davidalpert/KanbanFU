@@ -2,6 +2,9 @@ Kanbanfu::Application.routes.draw do
   get "cards/index"
 
   resources :projects do
+    collection do
+      put 'move_card'
+    end
     resources :cards
   end
 
