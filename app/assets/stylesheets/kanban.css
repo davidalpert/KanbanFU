@@ -133,12 +133,24 @@ table.sortable th.sorttable_nosort {
   border: none;
 }
 
+#kanban .card_size{
+  float: right;
+}
+
 #kanban .card_content{
   padding: 3px;
   float: left; 
   background-color: #EEEEEE; 
   width: 100%;
   padding-bottom: 2px;
+}
+
+#kanban .card_title{
+  display: block;
+}
+
+#kanban .card_description{
+  display: block;
 }
 
 #phase_list li {
