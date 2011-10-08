@@ -173,6 +173,26 @@ describe CardsController do
     end
   end
   
+  describe '#block' do
+    let(:card) { @cards.first }
+
+    context 'when card is not blocked' do
+      let(:json) { {card: adjust(card).merge(blocked: true) }.to_json(except: exceptions) }
+
+      before do
+        card.stub(:blocked).and_return(true)
+        put :block, format: :json, project_id: @project.id, id:1 
+      end
+      
+      it { should respond_with(:success) }
+      it { should respond_with_content_type(:json) }
+      it { response.body.should be_json_eql(json) }
+    end
+    
+    context 'when card is blocked' do
+    end
+  end
+  
   def adjust(cards) 
     adjusted = [cards].flatten.collect { |c| c.attributes.merge(phase: c.phase.name) }
     return adjusted if cards.kind_of? Array

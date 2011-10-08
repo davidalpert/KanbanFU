@@ -24,3 +24,7 @@ When /^I delete card "([^"]*)" for project "([^"]*)"$/ do |card_id, project_id|
   project = Project.create!(id: project_id, name: "Blazing Saddles", description: "Good movie")
   delete_resource "/projects/#{project_id}/cards/#{card_id}"
 end
+
+When /^I put API "([^"]*)"$/ do |url|
+  put url, format: :json
+end

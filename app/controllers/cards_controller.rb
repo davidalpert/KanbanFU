@@ -31,19 +31,29 @@ class CardsController < ApplicationController
 
   def destroy
     resource_found?(@project) do
-      card = @project.cards.find_by_id(params[:id])
+      card = @project.cards.first { |c| c.id == params[:id].to_i }
       item = {} if card.destroy
-      render_json(item, :error_code => :bad_request)
+      render_json(item, :error_code => :bad_request, except: exceptions)
     end
   end
 
+  def block
+    resource_found?(@project) do
+      card = @project.cards.first { |c| c.id == params[:id].to_i }
+      item = { card: adjust(card) } if card
+      render_json(item, :error_code => :bad_request, except: exceptions)
+    end
+  end
+  
   private
     def get_project
       @project = Project.find_by_id(params[:project_id])
     end
   
     def adjust(cards)
-      adjusted = [cards].flatten.collect { |c| c.attributes.merge(phase: c.phase.name) }
+      adjusted = [cards].flatten.collect do |c| 
+        c.attributes.merge(phase: c.phase.name, blocked: c.blocked) 
+      end
       return adjusted if cards.kind_of? Array
       adjusted.first
     end

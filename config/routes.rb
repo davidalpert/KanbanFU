@@ -2,7 +2,11 @@ Kanbanfu::Application.routes.draw do
   get "cards/index"
 
   resources :projects, :defaults => { :format => :json } do
-    resources :cards
+    resources :cards do
+      member do
+        put 'block'
+      end
+    end
   end
 
   # The priority is based upon order of creation:

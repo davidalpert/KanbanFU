@@ -4,6 +4,10 @@ class Card < ActiveRecord::Base
   validates :phase, :presence => true
   after_initialize :init  
   
+  def blocked
+    false
+  end
+  
   private
     def init
       self.blocked_time ||= 0
