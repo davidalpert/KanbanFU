@@ -54,3 +54,8 @@ Feature: Cards API
           | id | title            | description                       | started_on   | finished_on  | size | phase    | blocked_time | waiting_time | 
           | 1  | Find a Sheriff   | Get a Sheriff everybody will hate | Nov 01, 2011 | Nov 5, 2011  | 2    | archive  | 0 | 0 |
           | 2  | Kill the Sheriff | Make the town kill the Sheriff    | Nov 06, 2011 |              | 1    | working  | 0 | 0 |
+          
+  Scenario: Blocking a card
+    When I call API "/projects/1/cards/1/block"
+    Then the card in response should be blocked
+    
