@@ -170,6 +170,7 @@ describe CardsController do
       let(:json) { {card: adjust(card).merge(blocked: true) }.to_json(except: exceptions) }
 
       before do
+        card.should_receive(:block)
         card.stub(:blocked).and_return(true)
         put :block, format: :json, project_id: project.id, id:1 
       end

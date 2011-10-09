@@ -28,3 +28,7 @@ end
 When /^I put API "([^"]*)"$/ do |url|
   put url, format: :json
 end
+
+Then /^the card in response should be blocked$/ do
+  Then(%Q{the JSON at "card/blocked" should be true})
+end

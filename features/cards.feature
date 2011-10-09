@@ -57,6 +57,7 @@ Feature: Cards API
     
   @wip        
   Scenario: Blocking a card
-    When I put API "/projects/1/cards/1/block"
-    Then the card in response should be blocked
+    Given I put API "/projects/1/cards/1/block"
+    When  I call API "/projects/1/cards/1"
+    Then  the card in response should be blocked
     
