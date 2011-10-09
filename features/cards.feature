@@ -49,11 +49,12 @@ Feature: Cards API
                                                                                                                        
   Scenario: Deleting a card
     When I delete card "3" for project "1"
-    And  I call API "/projects/1/cards"
-    Then the response should be a collection of "cards" with:
+    And  I call API "/projects/1/cards/1"
+    Then the response should be a "card" with:
           | id | title            | description                       | started_on   | finished_on  | size | phase    | blocked_time | waiting_time | blocked |
           | 1  | Find a Sheriff   | Get a Sheriff everybody will hate | Nov 01, 2011 | Nov 5, 2011  | 2    | archive  | 0            | 0            | false   |
-          | 2  | Kill the Sheriff | Make the town kill the Sheriff    | Nov 06, 2011 |              | 1    | working  | 0            | 0            | false   |
+
+#          | 2  | Kill the Sheriff | Make the town kill the Sheriff    | Nov 06, 2011 |              | 1    | working  | 0            | 0            | false   |
                                                                                                                        
   @wip                                                                                                                 
   Scenario: Blocking a card
