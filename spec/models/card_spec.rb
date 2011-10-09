@@ -10,6 +10,7 @@ describe Card do
   it { should have_db_column(:size).of_type(:integer)         }
   it { should have_db_column(:blocked_time).of_type(:float) }
   it { should have_db_column(:waiting_time).of_type(:float) }
+  it { should have_db_column(:block_started).of_type(:datetime) }
   
   its(:waiting_time) { should == 0 }
   its(:blocked_time) { should == 0 }
