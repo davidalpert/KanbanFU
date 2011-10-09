@@ -37,14 +37,18 @@ class CardsController < ApplicationController
     end
   end
 
-  def block
+  def block(doit = true)
     resource_found?(@project) do
       card = @project.cards.first { |c| c.id == params[:id].to_i }
-      card.block
+      card.block(doit)
       card.save!
-      item = { card: adjust(card) } if card
+      item = {} if card
       render_json(item, :error_code => :bad_request, except: exceptions)
     end
+  end
+
+  def unblock
+    block(false)
   end
   
   private

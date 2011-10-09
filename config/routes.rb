@@ -5,6 +5,7 @@ Kanbanfu::Application.routes.draw do
     resources :cards do
       member do
         put 'block'
+        put 'unblock'
       end
     end
   end
