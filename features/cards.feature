@@ -13,28 +13,28 @@ Feature: Cards API
   Scenario: Listing cards for a project
     When I call API "/projects/1/cards"
     Then the response should be a collection of "cards" with:
-      | id | title            | description                       | started_on   | finished_on  | size | phase    | blocked_time | waiting_time | 
-      | 1  | Find a Sheriff   | Get a Sheriff everybody will hate | Nov 01, 2011 | Nov 5, 2011  | 2    | archive  | 0 | 0 |
-      | 2  | Kill the Sheriff | Make the town kill the Sheriff    | Nov 06, 2011 |              | 1    | working  | 0 | 0 |
-      | 3  | Take the town    | Make everybody sell their houses  | Nov 10, 2011 |              | 3    | analysis | 0 | 0 |
+      | id | title            | description                       | started_on   | finished_on  | size | phase    | blocked_time | waiting_time | blocked |
+      | 1  | Find a Sheriff   | Get a Sheriff everybody will hate | Nov 01, 2011 | Nov 5, 2011  | 2    | archive  | 0.0 | 0 | false |
+      | 2  | Kill the Sheriff | Make the town kill the Sheriff    | Nov 06, 2011 |              | 1    | working  | 0.0 | 0 | false |
+      | 3  | Take the town    | Make everybody sell their houses  | Nov 10, 2011 |              | 3    | analysis | 0.0 | 0 | false |
 
   Scenario: Get detail of a card
     When I call API "/projects/1/cards/2"
     Then the response should be a "card" with:
-      | id | title            | description                       | started_on   | finished_on  | size | phase    | blocked_time | waiting_time |
-      | 2  | Kill the Sheriff | Make the town kill the Sheriff    | Nov 06, 2011 |              | 1    | working  | 0 | 0 |
+      | id | title            | description                       | started_on   | finished_on  | size | phase    | blocked_time | waiting_time | blocked |
+      | 2  | Kill the Sheriff | Make the town kill the Sheriff    | Nov 06, 2011 |              | 1    | working  | 0            | 0            | false   |
 
   Scenario: Creating a card
     Given I post to "/cards" for project "1" with:
           | title               | description                       | started_on   | finished_on  | size | phase_id | blocked_time | waiting_time | 
-          | Destroy the Sheriff | Make the town destroy the Sheriff | Nov 15, 2011 |              | 1    | 1 | 0 | 0 |
+          | Destroy the Sheriff | Make the town destroy the Sheriff | Nov 15, 2011 |              | 1    | 1        | 0            | 0            | 
     When I call API "/projects/1/cards"
     Then the response should be a collection of "cards" with:
-          | id | title            | description                       | started_on   | finished_on  | size | phase    | blocked_time | waiting_time | 
-          | 1  | Find a Sheriff   | Get a Sheriff everybody will hate | Nov 01, 2011 | Nov 5, 2011  | 2    | archive  | 0 | 0 |
-          | 2  | Kill the Sheriff | Make the town kill the Sheriff    | Nov 06, 2011 |              | 1    | working  | 0 | 0 |
-          | 3  | Take the town    | Make everybody sell their houses  | Nov 10, 2011 |              | 3    | analysis | 0 | 0 |
-          | 4  | Destroy the Sheriff | Make the town destroy the Sheriff | Nov 15, 2011 |              | 1    | archive  | 0 | 0 |
+          | id | title            | description                          | started_on   | finished_on  | size | phase    | blocked_time | waiting_time | blocked | 
+          | 1  | Find a Sheriff   | Get a Sheriff everybody will hate    | Nov 01, 2011 | Nov 5, 2011  | 2    | archive  | 0            | 0            | false   |
+          | 2  | Kill the Sheriff | Make the town kill the Sheriff       | Nov 06, 2011 |              | 1    | working  | 0            | 0            | false   |
+          | 3  | Take the town    | Make everybody sell their houses     | Nov 10, 2011 |              | 3    | analysis | 0            | 0            | false   |
+          | 4  | Destroy the Sheriff | Make the town destroy the Sheriff | Nov 15, 2011 |              | 1    | archive  | 0            | 0            | false   |
 
   Scenario: Updating a card
     When I put to "/cards" for project "1" and card "1" with:
@@ -42,20 +42,20 @@ Feature: Cards API
           | Find a Deputy         | Get a Deputy for the Sheriff      |
     And  I call API "/projects/1/cards"
     Then the response should be a collection of "cards" with:
-          | id | title            | description                       | started_on   | finished_on  | size | phase    | blocked_time | waiting_time | 
-          | 1  | Find a Deputy    | Get a Deputy for the Sheriff      | Nov 01, 2011 | Nov 5, 2011  | 2    | archive  | 0 | 0 |
-          | 2  | Kill the Sheriff | Make the town kill the Sheriff    | Nov 06, 2011 |              | 1    | working  | 0 | 0 |
-          | 3  | Take the town    | Make everybody sell their houses  | Nov 10, 2011 |              | 3    | analysis | 0 | 0 |
-
+          | id | title            | description                       | started_on   | finished_on  | size | phase    |blocked_time | waiting_time | blocked |
+          | 1  | Find a Deputy    | Get a Deputy for the Sheriff      | Nov 01, 2011 | Nov 5, 2011  | 2    | archive  |0            | 0            | false   |
+          | 2  | Kill the Sheriff | Make the town kill the Sheriff    | Nov 06, 2011 |              | 1    | working  |0            | 0            | false   |
+          | 3  | Take the town    | Make everybody sell their houses  | Nov 10, 2011 |              | 3    | analysis |0            | 0            | false   |
+                                                                                                                       
   Scenario: Deleting a card
     When I delete card "3" for project "1"
     And  I call API "/projects/1/cards"
     Then the response should be a collection of "cards" with:
-          | id | title            | description                       | started_on   | finished_on  | size | phase    | blocked_time | waiting_time | 
-          | 1  | Find a Sheriff   | Get a Sheriff everybody will hate | Nov 01, 2011 | Nov 5, 2011  | 2    | archive  | 0 | 0 |
-          | 2  | Kill the Sheriff | Make the town kill the Sheriff    | Nov 06, 2011 |              | 1    | working  | 0 | 0 |
-    
-  @wip        
+          | id | title            | description                       | started_on   | finished_on  | size | phase    | blocked_time | waiting_time | blocked |
+          | 1  | Find a Sheriff   | Get a Sheriff everybody will hate | Nov 01, 2011 | Nov 5, 2011  | 2    | archive  | 0            | 0            | false   |
+          | 2  | Kill the Sheriff | Make the town kill the Sheriff    | Nov 06, 2011 |              | 1    | working  | 0            | 0            | false   |
+                                                                                                                       
+  @wip                                                                                                                 
   Scenario: Blocking a card
     Given I put API "/projects/1/cards/1/block"
     When  I call API "/projects/1/cards/1"

@@ -58,7 +58,9 @@ class CardsController < ApplicationController
   
     def adjust(cards)
       adjusted = [cards].flatten.collect do |c| 
-        c.attributes.merge(phase: c.phase.name, blocked: c.blocked) 
+        attrib = c.attributes
+        attrib.delete('block_started')
+        attrib.merge(phase: c.phase.name, blocked: c.blocked) 
       end
       return adjusted if cards.kind_of? Array
       adjusted.first
