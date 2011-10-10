@@ -5,6 +5,6 @@ module ProjectsHelper
   end
 
   def card_size(card)
-    card.size.blank? ? '0' : card.size
+    card.size.blank? ? 'n/a' : card.size
   end
 end

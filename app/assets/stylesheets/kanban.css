@@ -124,7 +124,7 @@ table.sortable th.sorttable_nosort {
   background-color: #DDDDDD; 
   width: 100%;
 }
-#kanban .card_header a{
+#kanban .card_header a {
   font-weight: bold;
   text-decoration: none;
   color: #000000;
@@ -151,6 +151,29 @@ table.sortable th.sorttable_nosort {
 
 #kanban .card_description{
   display: block;
+}
+
+#kanban .card_status {
+	padding: 3px;
+	float:left;
+	width: 100%;
+	background:teal;
+	color:white;
+	text-align:right;	
+}
+
+#kanban .blocked {
+	background:red;
+}
+
+#kanban .card_blocked {
+	padding-right:5px;
+}
+
+#kanban .card_blocked a {
+	color:white;
+	font-weight:bold;
+	text-decoration:none;
 }
 
 #phase_list li {

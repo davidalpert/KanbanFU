@@ -20,8 +20,9 @@ $(document).ready ->
     .prepend('<span class="ui-icon ui-icon-plusthick"></span>')
     .end().find(".card_content")
 
-		$(".card_header .ui-icon").click ->
+  $(".card_header .ui-icon").click ->
       $(this).toggleClass("ui-icon-minusthick")
       $(this).parents(".card:first").find(".card_content").toggle()
 
-    $(".card_list").disableSelection()
+  $(".card_list").disableSelection()
+

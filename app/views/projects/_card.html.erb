@@ -1,10 +1,14 @@
 <%= content_tag_for(:li, card) do -%>
   <div class="card_header">
-    <%= link_to card.id, [@project, card] %>
+    <%= link_to "#{card.id} - #{card.title}" , [@project, card] %>
     <span class="card_size">Size: <%= card_size(card) %></span>
   </div>
   <div class="card_content">
-    <div class="card_title"><%= card.title %></div>
     <div class="card_description"><%= card.description %></div>
+  </div>
+  <div class="card_status <%="blocked" if card.blocked%>">
+    <div class="card_blocked">
+      <%= link_to_block_card(@project, card) %>
+    </div>
   </div>
 <% end -%>
