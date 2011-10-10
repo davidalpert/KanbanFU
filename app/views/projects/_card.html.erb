@@ -5,6 +5,12 @@
   </div>
   <div class="card_content">
     <div class="card_description"><%= card.description %></div>
+    <% unless card.started_on.nil? %>
+      <div class="card_started">Started: <%= card.started_on.strftime('%b %d, %Y') %></div>
+    <% end %>
+    <% unless card.finished_on.nil? %>
+      <div class="card_finished">Finished: <%= card.finished_on.strftime('%b %d, %Y') %></div>
+    <% end %>
   </div>
   <div class="card_status <%="blocked" if card.blocked%>">
     <div class="card_blocked">
