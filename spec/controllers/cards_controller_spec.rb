@@ -18,11 +18,14 @@ describe CardsController do
                                                :finished_on => DateTime.now + i,
                                                :size => i,
                                                :phase => archive) } }
-  let(:card) { project.cards.first } 
+  let(:first) { project.cards.first } 
 
   before(:each) do
     project.stub(:cards).and_return(cards)
     Project.stub(:find_by_id).with(project.id.to_s).and_return(project)
+
+    Card.stub(:find_by_id).with(first.id.to_s).and_return(first)
+    project.stub_chain(:cards, :find_by_id).with(first.id.to_s).and_return(first)
   end
 
   it_behaves_like "any nested resource", Project, :project_id
@@ -39,13 +42,10 @@ describe CardsController do
   end
 
   describe "#show" do
-    let(:json) { { card: adjust(card) }.to_json(:except => exceptions) }
+    let(:json) { { card: adjust(first) }.to_json(:except => exceptions) }
     
     context "when card exists" do
-      before do
-        Card.stub(:find_by_id).with(card.id.to_s).and_return(card)
-        get :show, :format => :json, :project_id => project.id, :id => card.id
-      end
+      before  {get :show, :format => :json, :project_id => project.id, :id => first.id}
 
       it { should respond_with :success }
       it { response.body.should eq(json) }
@@ -53,8 +53,8 @@ describe CardsController do
 
     context "when card doesn't exist"  do
       before do
-        Card.stub(:find_by_id).with(card.id.to_s).and_return(nil)
-        get :show, :format => :json, :project_id => project.id, :id => card.id
+        Card.stub(:find_by_id).with(first.id.to_s).and_return(nil)
+        get :show, :format => :json, :project_id => project.id, :id => first.id
       end
 
       it { should respond_with :missing }
@@ -65,18 +65,18 @@ describe CardsController do
     context "when the card is created successfully" do
       let(:card_attributes) { {:title => "card_1", :description => "description_1"} }
 
-      let(:card) { stub_model(Card, 
+      let(:updated) { stub_model(Card, 
                               project_id: project.id,
                               title: 'card_1',
                               description: 'description_1',
                               started_on: DateTime.now,
                               phase: backlog) }
                               
-      let(:json) { { card: adjust(card) }.to_json(except: exceptions) }
+      let(:json) { { card: adjust(updated) }.to_json(except: exceptions) }
       
       before do
-        project.stub_chain(:cards, :create).and_return(card)
-        post :create, :format => :json, :project_id => project.id, :card => card.attributes
+        project.stub_chain(:cards, :create).and_return(updated)
+        post :create, :format => :json, :project_id => project.id, :card => updated.attributes
       end
 
       it { should respond_with(:success) }
@@ -97,17 +97,15 @@ describe CardsController do
   end
 
   describe '#update' do
-    before  {project.stub_chain(:cards, :find_by_id).with(card.id.to_s).and_return(card)}
-
     context "card is updated successfully" do
       let(:updated_card) { stub_model(Card, 
                                       :id => 1, 
                                       :project_id => 1, 
                                       :title => 'updated title', 
-                                      :finished_on => card.finished_on,
-                                      :phase => card.phase,
-                                      :started_on => card.started_on,
-                                      :size => card.size,
+                                      :finished_on => first.finished_on,
+                                      :phase => first.phase,
+                                      :started_on => first.started_on,
+                                      :size => first.size,
                                       :description => 'new description') }
       
       let(:json) { {card: adjust(updated_card) }.to_json(except: exceptions) }
@@ -127,7 +125,7 @@ describe CardsController do
 
     context "card is not updated" do
       before do
-        card.should_receive(:update_attributes).and_return(false)
+        first.should_receive(:update_attributes).and_return(false)
         put :update, :format => :json, 
             :project_id => project.id, :id => 1, 
             :card => {:title => ''}
@@ -140,12 +138,14 @@ describe CardsController do
   end
 
   describe '#delete' do
-    before  {project.stub_chain(:cards, :find_by_id).with(card.id.to_s).and_return(card)}
+    let(:second) { project.cards[1] }
+
+    before {Card.stub(:find_by_id).with(second.id.to_s).and_return(second)}
 
     context "card is deleted successfully" do
       before do
-        card.should_receive(:destroy).and_return(true)
-        delete :destroy, :format => :json, :project_id => project.id, :id => 1
+        second.should_receive(:destroy).and_return(true)
+        delete :destroy, :format => :json, :project_id => project.id, :id => second.id
       end
 
       it { should respond_with(:success) }
@@ -155,8 +155,8 @@ describe CardsController do
 
     context "card is not deleted" do
       before do
-        card.should_receive(:destroy).and_return(false)
-        delete :destroy, :format => :json, :project_id => project.id, :id => 1
+        second.should_receive(:destroy).and_return(false)
+        delete :destroy, :format => :json, :project_id => project.id, :id => second.id
       end
 
       it { should respond_with(:bad_request) }
@@ -168,8 +168,8 @@ describe CardsController do
   describe '#block' do
     context 'when card is not blocked' do
       before do
-        card.should_receive(:block).with(true)
-        put :block, format: :json, project_id: project.id, id:1 
+        first.should_receive(:block).with(true)
+        put :block, format: :json, project_id: project.id, id: first.id
       end
       
       it { should respond_with(:success) }
@@ -181,8 +181,8 @@ describe CardsController do
   describe '#unblock' do
     context 'when card is blocked' do
       before do
-        card.should_receive(:block).with(false)
-        put :unblock, format: :json, project_id: project.id, id:1 
+        first.should_receive(:block).with(false)
+        put :unblock, format: :json, project_id: project.id, id: first.id
       end
 
       it { should respond_with(:success) }
@@ -192,7 +192,11 @@ describe CardsController do
   end
 
   def adjust(cards) 
-    adjusted = [cards].flatten.collect { |c| c.attributes.merge(phase: c.phase.name, blocked: false) }
+    adjusted = [cards].flatten.collect do |c| 
+      attrib = c.attributes
+      attrib.delete('block_started')
+      attrib.merge(phase: c.phase.name, blocked: false) 
+    end
     return adjusted if cards.kind_of? Array
     adjusted.first
   end

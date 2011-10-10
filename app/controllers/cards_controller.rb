@@ -31,7 +31,7 @@ class CardsController < ApplicationController
 
   def destroy
     resource_found?(@project) do
-      card = @project.cards.first { |c| c.id == params[:id].to_i }
+      card = Card.find_by_id(params['id'])
       item = {} if card.destroy
       render_json(item, :error_code => :bad_request, except: exceptions)
     end
@@ -39,7 +39,7 @@ class CardsController < ApplicationController
 
   def block(doit = true)
     resource_found?(@project) do
-      card = @project.cards.first { |c| c.id == params[:id].to_i }
+      card = Card.find_by_id(params['id'])
       card.block(doit)
       card.save!
       item = {} if card
