@@ -29,6 +29,7 @@ def adjust_expected_response(row)
   
   row.
     merge(f.nil? ? {} : {'finished_on' => f == "" ? nil : DateTime.parse(f).strftime('%Y-%m-%dT00:00:00Z') }).
+    merge(if_exists(row, 'waiting') { |b| b == "true" }).
     merge(if_exists(row, 'blocked') { |b| b == "true" }).
     merge(if_exists(row, 'started_on') { |s| DateTime.parse(s).strftime('%Y-%m-%dT00:00:00Z') }).
     merge(if_exists(row, 'size') { |s| s.to_i }).
