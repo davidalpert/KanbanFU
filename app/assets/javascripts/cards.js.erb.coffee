@@ -6,19 +6,23 @@ $(document).ready ->
 	$(".block_card").click (e) -> 
       e.preventDefault()
       target = $(this).parent().parent()
-      blockIt = this.href.indexOf('unblock') < 0
-      if blockIt
-        target.addClass('blocked')
-      else
+      isBlocked = this.href.indexOf('unblock') >= 0
+
+      if isBlocked
+        this.href = this.href.replace('unblock', 'block')
+        $(this).text('Block')
         target.removeClass('blocked')
-      #alert('Should blockit? ' +  blockIt)      
+      else
+        this.href = this.href.replace('block', 'unblock')
+        $(this).text('Unblock')
+        target.addClass('blocked')
+
       $.ajax(
         type: 'put'
         url: this.href
         dataType: 'script'
         complete: (request) ->
-	      # change class to be 
-          #alert('Ajax call complete ' + c)
+	      # nothing to do
       )
       false
 

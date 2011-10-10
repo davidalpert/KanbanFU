@@ -260,3 +260,5 @@ html ul.project_nav li ul.subnav li a {
 html ul.project_nav li ul.subnav li a:hover { /*--Hover effect for subnav links--*/
   background: #2D3337 url(/images/dropdown_linkbg.gif) no-repeat 10px center;
 }
+
+.hidden { visibility: hidden; }
