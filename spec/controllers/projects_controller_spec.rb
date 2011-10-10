@@ -18,6 +18,32 @@ describe ProjectsController do
     it { response.body.should eq(@json) }
   end
 
+  describe "GET project#show" do
+    before do
+      Project.stub(:find_by_id).with('1').and_return(@projects.first)
+    end
+
+    context "via HTML" do
+      before do
+        get :show, :id => 1
+      end
+
+      it { should respond_with(:success) }
+      it { should respond_with_content_type(:html) }
+      it { should render_template(:show) }
+    end
+
+    context "via JSON" do
+      before do
+        get :show, :format => :json, :id => 1
+      end
+
+      it { should respond_with(:success) }
+      it { should respond_with_content_type(:json) }
+      it { response.body.should eq({project: @projects.first}.to_json(:except => [:created_at, :updated_at])) }
+    end
+  end
+
   describe '.create' do
     before do
       project = @projects.first.attributes

@@ -1,0 +1,6 @@
+<%= content_tag_for(:td, phase, phase_width(Phase.count)) do -%>
+  <div class="phase_title"><%= phase.name %></div>
+  <ul class="card_list">
+    <%= render :partial => 'card', :collection => phase.cards %>
+  </ul>
+<% end -%>

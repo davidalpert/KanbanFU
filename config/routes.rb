@@ -2,6 +2,10 @@ Kanbanfu::Application.routes.draw do
   get "cards/index"
 
   resources :projects, :defaults => { :format => :json } do
+    collection do
+      put 'move_card'
+    end
+
     resources :cards do
       member do
         put 'block'

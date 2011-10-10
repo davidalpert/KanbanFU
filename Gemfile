@@ -11,6 +11,8 @@ group :assets do
   gem 'uglifier'
 end
 
+gem 'jquery-rails'
+
 # Deploy with Capistrano
 gem 'capistrano'
 
@@ -22,7 +24,6 @@ group :development, :test do
   gem 'cucumber-rails'
   gem 'capybara'
   gem 'shoulda'
-  gem 'fabrication'
   gem 'launchy'
   gem 'faker'
   gem 'spork', '~> 0.9.0.rc'

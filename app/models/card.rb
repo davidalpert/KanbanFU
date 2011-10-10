@@ -22,5 +22,5 @@ class Card < ActiveRecord::Base
       self.blocked_time ||= 0.0
       self.waiting_time ||= 0.0
     end
-  
+
 end
