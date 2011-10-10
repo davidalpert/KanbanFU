@@ -12,9 +12,11 @@
       <div class="card_finished">Finished: <%= card.finished_on.strftime('%b %d, %Y') %></div>
     <% end %>
   </div>
-  <div class="card_status <%="blocked" if card.blocked%>">
+  <div class="card_status <%="blocked" if card.blocked%> <%="ready" if card.waiting%>">
     <div class="card_blocked">
       <%= link_to_block_card(@project, card) %>
+      |
+      <%= link_to_make_card_ready(@project, card) %>
     </div>
   </div>
 <% end -%>

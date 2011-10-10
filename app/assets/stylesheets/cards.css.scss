@@ -2,10 +2,24 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#kanban {
+	.card_status.ready {
+		background:lightgreen;
+	}
+
+	.card_ready {
+		padding-right:5px;
+	}
+
+	.card_ready a {
+		color:white;
+		font-weight:bold;
+		text-decoration:none;
+	}
+}
+
 body.cards {
   // Place scoped styles here
 
-	.card_status {
-		background: green;
-	}
+
 }
