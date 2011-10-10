@@ -9,6 +9,8 @@ Kanbanfu::Application.routes.draw do
       member do
         put 'block'
         put 'unblock'
+        put 'ready'
+        put 'not_ready'
       end
     end
   end

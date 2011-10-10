@@ -59,4 +59,10 @@ Feature: Cards API
     Given I put API "/projects/1/cards/1/block"
     When  I call API "/projects/1/cards/1"
     Then  the card in response should be blocked
+
+@wip
+  Scenario: Marking a card as ready
+    Given I put API "/projects/1/cards/1/ready"
+    When  I call API "/projects/1/cards/1"
+    Then  the card in response should be ready
     

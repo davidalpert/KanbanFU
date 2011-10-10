@@ -191,11 +191,38 @@ describe CardsController do
     end
   end
 
+  describe '#ready' do
+    context 'when card is not ready' do
+      before do
+        first.should_receive(:ready).with(true)
+        put :ready, format: :json, project_id: project.id, id: first.id
+      end
+      
+      it { should respond_with(:success) }
+      it { should respond_with_content_type(:json) }
+      it { response.body.should be_json_eql({}) }
+    end
+  end
+  
+  describe '#not_ready' do
+    context 'when card is ready' do
+      before do
+        first.should_receive(:ready).with(false)
+        put :not_ready, format: :json, project_id: project.id, id: first.id
+      end
+
+      it { should respond_with(:success) }
+      it { should respond_with_content_type(:json) }
+      it { response.body.should be_json_eql({}) }
+    end
+  end
+
   def adjust(cards) 
     adjusted = [cards].flatten.collect do |c| 
       attrib = c.attributes
       attrib.delete('block_started')
-      attrib.merge(phase: c.phase.name, blocked: false) 
+      attrib.delete('ready_started')
+      attrib.merge(phase: c.phase.name, blocked: false, waiting: false) 
     end
     return adjusted if cards.kind_of? Array
     adjusted.first

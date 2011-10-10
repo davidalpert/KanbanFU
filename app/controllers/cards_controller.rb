@@ -39,10 +39,7 @@ class CardsController < ApplicationController
 
   def block(doit = true)
     resource_found?(@project) do
-      card = Card.find_by_id(params['id'])
-      card.block(doit)
-      card.save!
-      item = {} if card
+      item = {} if find_card_and_do(params['id']) { |c| c.block(doit); c.save! }
       render_json(item, :error_code => :bad_request, except: exceptions)
     end
   end
@@ -51,7 +48,24 @@ class CardsController < ApplicationController
     block(false)
   end
   
+  def ready(doit = true)
+    resource_found?(@project) do
+      item = {} if find_card_and_do(params['id']) { |c| c.ready(doit); c.save! }
+      render_json(item, :error_code => :bad_request, except: exceptions)
+    end
+  end
+
+  def not_ready
+    ready(false)
+  end
+
   private
+    def find_card_and_do(id)
+      card = Card.find_by_id(params['id'])
+      return unless card
+      yield card
+    end
+    
     def get_project
       @project = Project.find_by_id(params[:project_id])
     end
@@ -59,8 +73,8 @@ class CardsController < ApplicationController
     def adjust(cards)
       adjusted = [cards].flatten.collect do |c| 
         attrib = c.attributes
-        attrib.delete('block_started')
-        attrib.merge(phase: c.phase.name, blocked: c.blocked) 
+        ['block_started', 'ready_started'].each { |a| attrib.delete(a) } 
+        attrib.merge(phase: c.phase.name, blocked: c.blocked, waiting: c.waiting) 
       end
       return adjusted if cards.kind_of? Array
       adjusted.first

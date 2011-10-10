@@ -32,3 +32,7 @@ end
 Then /^the card in response should be blocked$/ do
   Then(%Q{the JSON at "card/blocked" should be true})
 end
+
+Then /^the card in response should be ready$/ do
+  Then(%Q{the JSON at "card/waiting" should be true})
+end
