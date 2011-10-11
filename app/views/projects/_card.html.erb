@@ -4,7 +4,7 @@
     <span class="card_size">Size: <%= card_size(card) %></span>
   </div>
   <div class="card_content">
-    <div class="card_description"><%= card.description %></div>
+    <div class="card_description"><%= simple_format(card.description) %></div>
     <div class="card_stats">
       <% unless card.started_on.nil? %>
         <div class="card_started">Started: <%= card.started_on.strftime('%b %d, %Y') %></div>

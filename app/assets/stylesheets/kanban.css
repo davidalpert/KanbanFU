@@ -137,45 +137,7 @@ table.sortable th.sorttable_nosort {
   float: right;
 }
 
-#kanban .card_content{
-  padding: 3px;
-  float: left; 
-  background-color: #EEEEEE; 
-  width: 100%;
-  padding-bottom: 2px;
-}
 
-#kanban .card_title{
-  display: block;
-}
-
-#kanban .card_description{
-  display: block;
-  font-family:Helvetica;
-}
-
-#kanban .card_status {
-	padding: 3px;
-	float:left;
-	width: 100%;
-	background:#77BED2;
-	color:white;
-	text-align:right;	
-}
-
-#kanban .blocked {
-	background:red;
-}
-
-#kanban .card_blocked {
-	padding-right:5px;
-}
-
-#kanban .card_blocked a {
-	color:white;
-	font-weight:bold;
-	text-decoration:none;
-}
 
 #phase_list li {
   float: left;
