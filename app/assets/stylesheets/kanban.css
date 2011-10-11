@@ -151,13 +151,14 @@ table.sortable th.sorttable_nosort {
 
 #kanban .card_description{
   display: block;
+  font-family:Helvetica;
 }
 
 #kanban .card_status {
 	padding: 3px;
 	float:left;
 	width: 100%;
-	background:teal;
+	background:#77BED2;
 	color:white;
 	text-align:right;	
 }

@@ -3,8 +3,53 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 #kanban {
+	.card_content{
+	  padding: 3px;
+	  float: left; 
+	  background-color: #EEEEEE; 
+	  width: 100%;
+	  padding-bottom: 2px;
+	}
+
+	.card_title{
+	  display: block;
+	}
+
+	.card_description{
+	  display: block;
+	  font-family:Helvetica;
+	}
+
+	.card_status {
+		padding: 3px;
+		float:left;
+		width: 100%;
+		background:#77BED2;
+		color:white;
+		text-align:right;	
+	}
+
+	.blocked {
+		background:red;
+	}
+
+	.card_blocked {
+		padding-right:5px;
+	 	a {
+		color:white;
+		font-weight:bold;
+		text-decoration:none;
+		}
+	}
+	.card_stats {
+		margin:0px;
+		padding:5px;
+		padding-left:10px;
+		font-family: Courier;
+		font-style:italic;
+	}
 	.card_status.ready {
-		background:lightgreen;
+		background:#AFD775;
 	}
 
 	.card_ready {
