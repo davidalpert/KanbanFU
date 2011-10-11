@@ -32,9 +32,9 @@ describe Card do
       let(:finished) { DateTime.parse('Nov 3 2011') }
       
       before do
-        DateTime.stub(:now).and_return(started)
+        TimeProvider.stub(:current_time).and_return(started)
         subject.block
-        DateTime.stub(:now).and_return(finished)
+        TimeProvider.stub(:current_time).and_return(finished)
         subject.block(false) 
       end
       
@@ -47,12 +47,12 @@ describe Card do
       
       let(:finished) { DateTime.parse('Nov 3 2011') }
       
-      subject { Card.new(blocked_time:20) }
+      subject { Card.new(blocked_time: 20) }
 
       before do
-        DateTime.stub(:now).and_return(started)
+        TimeProvider.stub(:current_time).and_return(started)
         subject.block
-        DateTime.stub(:now).and_return(finished)
+        TimeProvider.stub(:current_time).and_return(finished)
         subject.block(false) 
       end
       
@@ -74,9 +74,9 @@ describe Card do
       let(:finished) { DateTime.parse('Nov 3 2011') }
       
       before do
-        DateTime.stub(:now).and_return(started)
+        TimeProvider.stub(:current_time).and_return(started)
         subject.ready
-        DateTime.stub(:now).and_return(finished)
+        TimeProvider.stub(:current_time).and_return(finished)
         subject.ready(false) 
       end
       
@@ -92,9 +92,9 @@ describe Card do
       subject { Card.new(waiting_time:20) }
 
       before do
-        DateTime.stub(:now).and_return(started)
+        TimeProvider.stub(:current_time).and_return(started)
         subject.ready
-        DateTime.stub(:now).and_return(finished)
+        TimeProvider.stub(:current_time).and_return(finished)
         subject.ready(false) 
       end
       

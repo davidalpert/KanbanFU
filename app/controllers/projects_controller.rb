@@ -40,6 +40,7 @@ class ProjectsController < ApplicationController
     
     def clear_life_cycle(card)
       card.update_attribute(:started_on, nil)
+      card.update_attributes(waiting_time: 0, blocked_time: 0)
     end
 
     def clear_finish(card)

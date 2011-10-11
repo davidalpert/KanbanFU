@@ -14,19 +14,19 @@ class Card < ActiveRecord::Base
   end
 
   def block(doit = true)
-    self.block_started = DateTime.now if doit
+    self.block_started = TimeProvider.current_time if doit
     ready(false) if doit
     unless doit
-      self.blocked_time += (DateTime.now - self.block_started.to_datetime).to_f if self.block_started
+      self.blocked_time += (TimeProvider.current_time - self.block_started.to_datetime).to_f if self.block_started
       self.block_started = nil
     end
   end
 
   def ready(doit = true)
-    self.ready_started = DateTime.now if doit
+    self.ready_started = TimeProvider.current_time if doit
     block(false) if doit
     unless doit
-      self.waiting_time += (DateTime.now - self.ready_started.to_datetime).to_f if self.ready_started
+      self.waiting_time += (TimeProvider.current_time - self.ready_started.to_datetime).to_f if self.ready_started
       self.ready_started = nil
     end
   end
