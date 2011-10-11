@@ -1,7 +1,9 @@
 <%= content_tag_for(:li, card) do -%>
   <div class="card_header">
     <%= link_to "#{card.id} - #{card.title}" , [@project, card] %>
+    <% unless card.phase.is_backlog %>
     <span class="card_size">Size: <%= card_size(card) %></span>
+    <% end %>
   </div>
   <div class="card_content">
     <div class="card_description"><%= simple_format(card.description) %></div>
