@@ -94,6 +94,10 @@ table.sortable th.sorttable_nosort {
   border-left: 2px dotted #CCCCCC;
 }
 
+#kanban .wip_limit {
+	background:pink;
+}
+
 #kanban .card_list{
   list-style: none;
   min-height: 800px;
