@@ -59,19 +59,59 @@ describe ProjectsController do
   describe '.move_card' do
     [:backlog, :analysis, :working, :review, :archive].each_with_index do |p, i|
       let(p) do 
-        phase = stub_model(Phase, name: p.to_s, id: i) 
+        phase = stub_model(Phase, name: p.to_s, id: i, is_backlog: p == :backlog, is_archive: p == :archive) 
         Phase.stub(:find_by_id).with(i.to_s).and_return(phase)
         phase 
       end
     end
 
-    let(:card) {stub_model(Card)}
+    let(:card) { stub_model(Card, phase: backlog) }
+    let(:started) { DateTime.parse('Nov 21, 2011') }
+
+    before do
+      TimeProvider.stub(:current_time).and_return(started)
+      Card.stub(:find_by_id).with(card.id.to_s).and_return(card)
+    end
 
     context 'when moving from backlog' do
       before do 
-        Card.stub(:find_by_id).with(card.id.to_s).and_return(card)
-        #card.should_receive(:update_attribute).with(:phase_id, working.id)
+        card.should_receive(:update_attribute).with(:phase_id, working.id)
+        card.should_receive(:update_attribute).with(:started_on, started)
         put :move_card, format: :js, card_id: card.id, phase_id: working.id
+      end
+
+      it { should respond_with(:success) }
+    end
+    
+    context 'when moving to archive' do
+      before do 
+        card.should_receive(:update_attribute).with(:phase_id, archive.id)
+        card.should_receive(:update_attribute).with(:started_on, started)
+        card.should_receive(:update_attribute).with(:finished_on, started)
+        put :move_card, format: :js, card_id: card.id, phase_id: archive.id
+      end
+
+      it { should respond_with(:success) }
+    end
+    
+    context 'when moving from archive' do
+      before do 
+        card.stub(:started_on).and_return(started)
+        card.stub(:finished_on).and_return(started)
+        card.should_receive(:update_attribute).with(:phase_id, review.id)
+        card.should_receive(:update_attribute).with(:finished_on, nil)
+        put :move_card, format: :js, card_id: card.id, phase_id: review.id
+      end
+
+      it { should respond_with(:success) }
+    end
+
+    context 'when moving to backlog' do
+      before do 
+        card.stub(:started_on).and_return(started)
+        card.should_receive(:update_attribute).with(:phase_id, backlog.id)
+        card.should_receive(:update_attribute).with(:started_on, nil)
+        put :move_card, format: :js, card_id: card.id, phase_id: backlog.id
       end
 
       it { should respond_with(:success) }
