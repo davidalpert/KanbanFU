@@ -11,6 +11,12 @@
     <% unless card.finished_on.nil? %>
       <div class="card_finished">Finished: <%= card.finished_on.strftime('%b %d, %Y') %></div>
     <% end %>
+    <% unless card.waiting_time <= 0 %>
+      <div class="card_waiting_time">Waiting: <%= card.waiting_time.round(2) %> Day</div>
+    <% end %>
+    <% unless card.blocked_time <= 0 %>
+      <div class="card_blocked_time">Blocked: <%= card.blocked_time.round(4)%> Day</div>
+    <% end %>
   </div>
   <div class="card_status <%="blocked" if card.blocked%> <%="ready" if card.waiting%>">
     <div class="card_blocked">

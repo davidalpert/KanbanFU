@@ -24,7 +24,7 @@ class ProjectsController < ApplicationController
         moved_card = Card.find_by_id params[:card_id]
         phase = Phase.find_by_id params[:phase_id]
         moved_card.update_attribute :phase_id, phase.id
-        render :nothing => true
+        render nothing: true
       end
     end
   end

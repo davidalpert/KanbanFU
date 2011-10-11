@@ -12,11 +12,11 @@ $(document).ready ->
       if isBlocked
         this.href = this.href.replace('unblock', 'block')
         $(this).text('Block')
-        target.removeClass('blocked')
       else
         this.href = this.href.replace('block', 'unblock')
         $(this).text('Unblock')
-        target.addClass('blocked')
+
+      target.toggleClass('blocked')
 
       $.ajax(
         type: 'put'
@@ -24,6 +24,7 @@ $(document).ready ->
         dataType: 'script'
         complete: (request) ->
 	      # nothing to do
+          $( "#dialog" ).dialog()
       )
       false
 
@@ -36,11 +37,11 @@ $(document).ready ->
       if isReady
         this.href = this.href.replace('not_', '')
         $(this).text('Ready')
-        target.removeClass('ready')
       else
         this.href = this.href.replace('ready', 'not_ready')
         $(this).text('Not Ready')
-        target.addClass('ready')
+      
+      target.toggleClass('ready')
 
       $.ajax(
         type: 'put'

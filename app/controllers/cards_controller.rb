@@ -31,15 +31,14 @@ class CardsController < ApplicationController
 
   def destroy
     resource_found?(@project) do
-      card = Card.find_by_id(params['id'])
-      item = {} if card.destroy
+      item = {} if card_is_found(params['id']) { |c| c.destroy }
       render_json(item, :error_code => :bad_request, except: exceptions)
     end
   end
 
   def block(doit = true)
     resource_found?(@project) do
-      item = {} if find_card_and_do(params['id']) { |c| c.block(doit); c.save! }
+      item = {} if card_is_found(params['id']) { |c| c.block(doit); c.save! }
       render_json(item, :error_code => :bad_request, except: exceptions)
     end
   end
@@ -50,7 +49,7 @@ class CardsController < ApplicationController
   
   def ready(doit = true)
     resource_found?(@project) do
-      item = {} if find_card_and_do(params['id']) { |c| c.ready(doit); c.save! }
+      item = {} if card_is_found(params['id']) { |c| c.ready(doit); c.save! }
       render_json(item, :error_code => :bad_request, except: exceptions)
     end
   end
@@ -60,7 +59,7 @@ class CardsController < ApplicationController
   end
 
   private
-    def find_card_and_do(id)
+    def card_is_found(id)
       card = Card.find_by_id(params['id'])
       return unless card
       yield card

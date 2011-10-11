@@ -4,10 +4,10 @@ describe ProjectsController do
 
   before(:each) do
     @projects = (1..10).collect {|i| stub_model(Project, :id => i, :name => "project_#{i}", :description => "description_#{i}") }
-    @json = {projects: @projects}.to_json(:except => [:project_id, :created_at, :updated_at])
+    @json = {projects: @projects}.to_json(:except => exceptions)
   end
 
-  describe '.index format JSON' do
+  describe '.index ' do
     before do
       Project.stub(:all).and_return(@projects)
       get :index, :format => :json
@@ -18,15 +18,11 @@ describe ProjectsController do
     it { response.body.should eq(@json) }
   end
 
-  describe "GET project#show" do
-    before do
-      Project.stub(:find_by_id).with('1').and_return(@projects.first)
-    end
+  describe ".show" do
+    before {Project.stub(:find_by_id).with('1').and_return(@projects.first)}
 
     context "via HTML" do
-      before do
-        get :show, :id => 1
-      end
+      before {get :show, :id => 1}
 
       it { should respond_with(:success) }
       it { should respond_with_content_type(:html) }
@@ -34,13 +30,11 @@ describe ProjectsController do
     end
 
     context "via JSON" do
-      before do
-        get :show, :format => :json, :id => 1
-      end
+      before {get :show, :format => :json, :id => 1}
 
       it { should respond_with(:success) }
       it { should respond_with_content_type(:json) }
-      it { response.body.should eq({project: @projects.first}.to_json(:except => [:created_at, :updated_at])) }
+      it { response.body.should eq({project: @projects.first}.to_json(:except => exceptions)) }
     end
   end
 
@@ -62,5 +56,30 @@ describe ProjectsController do
     it { response.body.should be_json_eql(@json) }
   end
 
+  describe '.move_card' do
+    [:backlog, :analysis, :working, :review, :archive].each_with_index do |p, i|
+      let(p) do 
+        phase = stub_model(Phase, name: p.to_s, id: i) 
+        Phase.stub(:find_by_id).with(i.to_s).and_return(phase)
+        phase 
+      end
+    end
+
+    let(:card) {stub_model(Card)}
+
+    context 'when moving from backlog' do
+      before do 
+        Card.stub(:find_by_id).with(card.id.to_s).and_return(card)
+        #card.should_receive(:update_attribute).with(:phase_id, working.id)
+        put :move_card, format: :js, card_id: card.id, phase_id: working.id
+      end
+
+      it { should respond_with(:success) }
+    end
+  end
+
+  def exceptions
+    [:project_id, :created_at, :updated_at]
+  end
 end
 

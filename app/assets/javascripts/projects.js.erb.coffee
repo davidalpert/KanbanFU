@@ -1,4 +1,6 @@
 $(document).ready ->
+  $( "#datepicker" ).datepicker()
+	
   $('.card_list').sortable(
     connectWith: '.card_list'
     stop: (event, ui) ->
