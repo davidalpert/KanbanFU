@@ -1,0 +1,111 @@
+### Should we show the demo weekly?
+
+* Iteration 0:
+  - Show TeamCity running no tests (yet)
+  - Show TC deployment task
+  - Show empty app running
+  
+* Aug 29th:
+  - Discuss analyst role and "blurred edges"
+  - Move #1 "Log in" to analysis, show cucumber feature
+  - Say u r going to set the size to 2 (refresh and voila!)
+  - Discuss reviewing sizes once they are in the board
+  - Move to working
+  - Move #4 "Manage Users" to analysis
+
+* Aug 30th:
+   - Discuss: #4 analysis is ready, should we mark it ready? or move to working?
+   - Move #4 to working
+   - Move #5 to analysis
+   
+* Aug 31st:
+   - Move #1 to review (show TC integration)
+   - Switch QA hat
+   
+* Sep 1st:
+   - Move #1 to Archive
+   - Discuss why statistics are important
+   - Show stats
+   - Talk about duration, blocked, waiting, efficiency, actual work
+   - Move #5 "CRUD Review" to working
+   - Move #2 "List Pending reviews" to analysis 
+
+* Sep 2nd:
+   - Look at the board and discuss why there's nothing to test
+
+* Sep 5th:
+  - Raise concern #4 is a bigger feature than planned because included roles   
+  - split #4 into "CRUD Roles" and add it to backlog
+  - keep #4 same size
+  
+* Sep 6th:
+  - Move #4 to Review
+  - Move #2 to working
+  - Move #3 to analysis
+  
+* Sep 7th:
+  - #5 is ready? Can we move it to Review? Discuss what ready means....
+  - Mark #5 as ready
+  
+  
+* Sep 9th:
+  - Move #4 to archive
+  - Move #5 (set to not ready first)  
+  - Demo the app (if we have it)
+  
+* Sep 12th:
+  - Discuss if we can move any feature to analysis
+  - URGENT FEATURE FROM VP! Add password reset (forgot my password)
+  - VP says: no TDD because takes too long
+  - What can we do? Discuss
+  - Overload Analysis (we have to.....)
+  - What happens to #3? Should we block it?
+  
+* Sep 13th:
+  - Move VP Feature to working
+  - Show that nothing else is done
+  
+* Sep 14th 
+  - Move VP feature to Review 
+  - What happens to #5? Should we block it?
+  
+* Sep 15th
+  - Move VP to archive
+  
+* Sep 19th:
+  - Move #5 to archive
+  - Move #2 to review
+  - Move #3 to working
+  - Move #6 to analysis
+  
+* Sep 20th:
+  - Urgent bug report: USERS CAN'T LOGIN!
+  - What should we do? Bring back reset password feature? (VP feature)
+  - Discuss
+  - Create new feature tagged as Bug.....
+  - Now, what's the priority? Should we move that into analysis?
+  - No, we can wait until analysis is free
+  
+* Sep 21st:
+  - Move #6 to working
+  - Move #2 to archive
+  - Move #12 to analysis
+  - Review is empty? Can we move anything? What should QA do then? Discuss...
+  
+* Sep 22nd:
+  - Move #3 to review
+  - Block #6 because we need to clarify with the VP the kind of questions we
+    want to support, and the VP went to Hoth for holidays
+  - Move #12 (BUG) to Working    
+  - Move #7 to Analysis
+  
+* Sep 26th:
+  - Move #3 to archive
+  - Move #12 (Bug) to review
+  - VP still on vacation 
+  - Move #7 to working
+  - Move #8 to analysis
+  
+  
+  
+  
