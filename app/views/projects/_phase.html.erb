@@ -1,4 +1,4 @@
-<%= content_tag_for(:td, phase, phase_width(Phase.count)) do -%>
+<%= content_tag_for(:td, phase, phase_width(Phase.count).merge(wip: phase.wip)) do -%>
   <div class="phase_title"><%= phase_title(phase) %></div>
   <ul class="card_list">
     <%= render :partial => 'card', :collection => phase.cards %>
