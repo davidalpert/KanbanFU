@@ -1,7 +1,7 @@
 <table id="kanban">
   <tbody>
     <tr>
-      <%= render :partial => 'phase', :collection => Phase.all %>
+      <%= render :partial => 'phase', :collection => Phase.all(order: :show_order) %>
     </tr> 
   </tbody>
 </table>

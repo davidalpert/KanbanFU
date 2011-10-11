@@ -1,5 +1,9 @@
 $(document).ready ->
-  $( "#datepicker" ).datepicker()
+  $( "#datepicker" ).datepicker(
+    dateFormat: 'M d, yy'
+    onSelect: (date, inst) ->
+      alert('New date has been selected ' + date)
+  )
 	
   $('.card_list').sortable(
     connectWith: '.card_list'
