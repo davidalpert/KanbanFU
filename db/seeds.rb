@@ -8,8 +8,12 @@
 
 
 # phases
-[:backlog, :analysis, :working, :review, :archive].each_with_index do |p, i|
-  Phase.create!(name: p.to_s.capitalize, show_order: i, description: "The phase #{p.to_s}") 
+i = 1
+{backlog: nil, analysis: 1, working: 2, review: 1, archive: nil}.each_pair do |p, wip|
+  Phase.create!(name: p.to_s.capitalize, 
+                show_order: i += 1, 
+                description: "The phase #{p.to_s}", 
+                wip: wip) 
 end
 
 backlog = Phase.find_by_name('Backlog')
@@ -69,6 +73,7 @@ As a Manager
 I want to see the results of the reviews
 So I can decide how to improve the team
 eos
+
 
 
 
