@@ -1,5 +1,7 @@
 Kanbanfu::Application.routes.draw do
 
+  match 'current_date' => 'application#current_date'
+  
   resources :projects do
     collection do
       put 'move_card'

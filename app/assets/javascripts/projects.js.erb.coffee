@@ -2,7 +2,12 @@ $(document).ready ->
   $( "#datepicker" ).datepicker(
     dateFormat: 'M d, yy'
     onSelect: (date, inst) ->
-      alert('New date has been selected ' + date)
+      $.ajax(
+        type: 'put'
+        data: 'date=' + date
+        dataType: 'script'
+        url: '/current_date'
+      )
   )
 	
   $('.card_list').sortable(
