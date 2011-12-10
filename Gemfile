@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.1.0'
+gem 'haml-rails'
 
 gem 'sqlite3'
 
@@ -12,6 +13,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'high_voltage', '1.0.1'
 
 # Deploy with Capistrano
 gem 'capistrano'

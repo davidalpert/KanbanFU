@@ -1,0 +1,3 @@
+class HomePage < BasePage
+  
+end

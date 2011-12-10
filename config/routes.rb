@@ -1,5 +1,7 @@
 Kanbanfu::Application.routes.draw do
 
+  root :to => 'pages#show', :defaults => {:id => 'home'}
+
   match 'current_date' => 'application#current_date'
   
   resources :projects do
