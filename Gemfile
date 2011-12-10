@@ -27,6 +27,12 @@ group :development, :test do
   gem 'launchy'
   gem 'faker'
   gem 'spork', '~> 0.9.0.rc'
+  gem 'guard'
+  gem 'guard-bundler'
+  gem 'guard-rails'
+  gem 'guard-rails-assets'
+  gem 'guard-spork'
+  gem 'guard-rspec'
   gem 'database_cleaner'
   gem 'json_spec'
 end
